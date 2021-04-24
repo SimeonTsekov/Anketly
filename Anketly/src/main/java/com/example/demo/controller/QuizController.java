@@ -51,7 +51,6 @@ public class QuizController {
 
         UUID uuid = UUID.randomUUID();
         Optional<UserEntity> user = userService.findByUsername(((UserModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
-        System.out.println(((UserModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername());
 
         QuizEntity quizEntity = new QuizEntity(quizModel.getName(),
                 quizModel.isPublic(),
@@ -69,6 +68,17 @@ public class QuizController {
         });
 
         return quiz;
+    }
+
+    @RequestMapping(value = "/getPublicQuizzes", method = RequestMethod.GET)
+    public Set<QuizEntity> getPublicQuizzes() throws Exception {
+        return quizService.getPublicQuizzes();
+    }
+
+    @RequestMapping(value = "/closeQuiz", method = RequestMethod.PATCH)
+    public QuizEntity closeQuiz(@RequestBody QuizEntity quizEntity) {
+        quizEntity.setOpen(false);
+        return quizService.insertQuiz(quizEntity);
     }
 
 }
