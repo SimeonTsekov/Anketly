@@ -16,7 +16,7 @@ public class QuestionEntity {
     @Column(length = 100000)
     private String base64image;
     @OneToMany
-    @JoinColumn(name = "answerId", referencedColumnName = "questionId")
+    @JoinColumn(name = "questionId")
     Set<AnswerEntity> answerEntities = new HashSet<>();
 
     public QuestionEntity() { }

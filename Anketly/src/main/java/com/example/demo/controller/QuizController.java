@@ -12,16 +12,15 @@ import com.example.demo.service.QuestionService;
 import com.example.demo.service.QuizService;
 import com.example.demo.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class QuizController {
 
@@ -61,11 +60,15 @@ public class QuizController {
 
         QuizEntity quiz = quizService.insertQuiz(quizEntity);
 
+        System.out.println("lmao");
+
         quiz.getQuestionEntities().forEach(q -> {
-            q.getAnswerEntities().forEach(qu -> {
-                answerService.insertAnswer(new AnswerEntity(q.questionId, qu.getDescription()));
+             Optional<QuestionModel> questionModel = quizModel.getQuestionModels().stream()
+            .filter(m -> m.getDescription().equals(q.getDescription())).findFirst();
+
+             questionModel.get().getAnswers().forEach(a ->
+                     answerService.insertAnswer(new AnswerEntity(q.questionId, a)));
             });
-        });
 
         return quiz;
     }
@@ -73,6 +76,11 @@ public class QuizController {
     @RequestMapping(value = "/getPublicQuizzes", method = RequestMethod.GET)
     public Set<QuizEntity> getPublicQuizzes() throws Exception {
         return quizService.getPublicQuizzes();
+    }
+
+    @RequestMapping(value = "/getQuizByUuid/{uuid}", method = RequestMethod.GET)
+    public Optional<QuizEntity> getQuizByUuid(@PathVariable String uuid) throws Exception {
+        return quizService.findByUuid(uuid);
     }
 
     @RequestMapping(value = "/closeQuiz", method = RequestMethod.PATCH)

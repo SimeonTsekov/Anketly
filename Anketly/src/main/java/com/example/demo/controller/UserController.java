@@ -2,12 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.entities.QuizEntity;
 import com.example.demo.service.UserService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
 

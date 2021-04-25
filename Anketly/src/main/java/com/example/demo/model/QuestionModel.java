@@ -7,14 +7,14 @@ public class QuestionModel {
     private boolean multipleChoice;
     private String description;
     private String base64image;
-    private Set<AnswerModel> answerModels;
+    private Set<String> answers;
 
-    public QuestionModel(boolean required, boolean multipleChoice, String description, String base64image, Set<AnswerModel> answerModels) {
+    public QuestionModel(boolean required, boolean multipleChoice, String description, String base64image, Set<String> answers) {
         this.required = required;
         this.multipleChoice = multipleChoice;
         this.description = description;
         this.base64image = base64image;
-        this.answerModels = answerModels;
+        this.answers = answers;
     }
 
     public boolean isRequired() {
@@ -49,11 +49,11 @@ public class QuestionModel {
         this.base64image = base64image;
     }
 
-    public Set<AnswerModel> getAnswerModels() {
-        return answerModels;
+    public Set<String> getAnswers() {
+        return answers;
     }
 
-    public void setAnswerModels(Set<AnswerModel> answerModels) {
-        this.answerModels = answerModels;
+    public void setAnswers(Set<String> answers) {
+        this.answers = answers;
     }
 }

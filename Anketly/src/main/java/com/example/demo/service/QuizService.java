@@ -25,4 +25,8 @@ public class QuizService {
     public Set<QuizEntity> getPublicQuizzes() {
         return quizRepository.findByIsPublicIsTrueAndIsOpenIsTrue();
     }
+
+    public Optional<QuizEntity> findByUuid(String uuid) {
+        return quizRepository.findByUuid(uuid);
+    }
 }
